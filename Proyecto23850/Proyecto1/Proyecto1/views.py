@@ -3,6 +3,9 @@ from datetime import datetime
 
 from django.template import Template, Context
 
+#PASO 1
+from django.template import loader
+
 def saludo(request):
 	return HttpResponse("Soy Nico - Hola Django - Coder")
 
@@ -34,14 +37,32 @@ def cuantosAniosTengo(request, nac):
 
 def probandoTemplate(request):
     
-    miHTML = open("C:/Users/nico_/Desktop/Proyecto23850/Proyecto1/Proyecto1/plantillas/template1.html")
+    mejorEstudiante = "Ilan Fritzler"
     
-    plantilla = Template(miHTML.read())
+    nota = 8.9
     
-    miHTML.close()
+    fecha = datetime.now()
     
-    miContexto = Context()  
+    estudiantesMasSimpaticos = ["Juanse", "Nadia", "Cristo", "Laura"]
     
-    documento = plantilla.render(miContexto)
+    dicc = {"nombre":mejorEstudiante, "nota":nota,"fecha":fecha, "estudiantes":estudiantesMasSimpaticos}
+    
+    #Recordatorio :( 
+    
+    #paso 3
+    plantilla = loader.get_template("template1.html")
+    
+    
+    #miHTML = open("C:/Users/nico_/Desktop/Proyecto23850/Proyecto1/Proyecto1/plantillas/template1.html")
+    
+    #plantilla = Template(miHTML.read())
+    
+    #miHTML.close()
+    
+    #miContexto = Context(dicc)  
+    
+    #documento = plantilla.render(miContexto)
+    
+    documento = plantilla.render(dicc)
     
     return HttpResponse(documento)

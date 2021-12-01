@@ -10,11 +10,38 @@
 
 <body>
 
+    <!-- Esto es una nota que no hace nada :) -->
+
+    <p>HOY ES UN GRAN DIA: {{fecha}}</p>
+
     <h1>NICO-------------</h1>
 
     <h5>PEREZ</h5>
 
     <p>Que gran profesor que me toco :) .... En otro otro curso, en este no :(</p>
+
+
+    <h2 style="color: red;">EL mejor estudiante es: {{nombre}} </h2>
+
+    <h2 style="color: chartreuse;">Su nota es: {{nota}} </h2>
+
+    <h1>SIMPATICOS:</h1> <br>
+
+    {%  for estu in estudiantes  %}
+
+
+        {% if estu == 'Nadia' %}
+
+             <p style="color: blueviolet;">{{estu}}</p> 
+
+        {% else %}
+            <p>{{estu}}</p> 
+
+        {% endif %}
+
+    {% endfor %}
+
+    
 
 
     
