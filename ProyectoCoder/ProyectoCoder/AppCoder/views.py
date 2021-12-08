@@ -15,3 +15,9 @@ def jugadores(request):
     
     
     return render(request, 'AppCoder/jugadores.html')
+
+
+def equipos(request):
+    
+    
+    return render(request, 'AppCoder/equipos.html')
