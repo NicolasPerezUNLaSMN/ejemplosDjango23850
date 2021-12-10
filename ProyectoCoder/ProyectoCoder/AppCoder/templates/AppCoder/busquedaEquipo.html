@@ -1,0 +1,30 @@
+{% extends "AppCoder/padre.html" %}
+
+
+{% load static %}
+
+        {% block contenido2 %}
+            <h1 class="mb-1">BUSQUEDA EQUIPO!!!!!!!!!!!!!!!!!!!!</h1>
+        {% endblock %}
+
+
+        {% block contenido %}
+
+
+            <h1>Titulo del buscando equipo :)</h1>
+
+            <form action="/AppCoder/buscar/" method="GET">
+
+                <input type="text" name="nombre" id="nombre">
+
+                <input type="submit" value="BUSCAR!!!!">
+
+
+
+            </form>
+
+         
+
+         
+
+        {% endblock %}

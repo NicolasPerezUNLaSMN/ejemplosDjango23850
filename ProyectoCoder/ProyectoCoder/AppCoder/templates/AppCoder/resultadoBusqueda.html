@@ -1,0 +1,33 @@
+{% extends "AppCoder/padre.html" %}
+
+
+{% load static %}
+
+        {% block contenido2 %}
+            <h1 class="mb-1">BUSQUEDA EQUIPO!!!!!!!!!!!!!!!!!!!!</h1>
+        {% endblock %}
+
+
+        {% block contenido %}
+
+
+            <h1>Estamos buscando....</h1>
+
+            {% if equipos %}
+
+                <ul>
+                {% for equipo in equipos %}
+
+                <li>{{equipo.nombre}}</li>
+                <li>{{equipo.ciudad}}</li>
+
+
+                {% endfor %}
+                </ul>
+
+            {% endif %}
+         
+
+         
+
+        {% endblock %}

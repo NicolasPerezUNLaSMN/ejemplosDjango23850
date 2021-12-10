@@ -2,7 +2,72 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 
+from AppCoder.models import Estadio, Equipo
+
+
+from AppCoder.forms import EstadioFormulario
+
+
+
+
+def busquedaEquipo(request):
+    
+    return render(request, 'AppCoder/busquedaEquipo.html')
+
+
+def buscar(request):
+    
+    
+    if request.GET["nombre"]:
+        
+        nombre = request.GET["nombre"]
+        
+        equipos = Equipo.objects.filter(nombre__icontains=nombre)
+        
+        
+        #respuesta = f"ESTOY BUSCANDO A: {request.GET['nombre']}"
+        
+        return render(request, "AppCoder/resultadoBusqueda.html",{"equipos":equipos, "nombre":nombre})
+         
+         
+    else: 
+        
+        respuesta = "Che, mandame información"     
+    
+    return HttpResponse(respuesta)
+
+
+
+
 # Create your views here.
+
+def estadioFormulario(request):
+    
+    #obtiene la direccion y el anioFund
+    
+    if request.method == "POST":
+        
+        miFormulario = EstadioFormulario(request.POST)
+        
+        if miFormulario.is_valid():  #va con ()
+            
+            informacion = miFormulario.cleaned_data
+        
+            estadioInsta = Estadio(direccion=informacion["direccion"] ,anioFund= informacion["anioFund"])
+            
+            estadioInsta.save() #Es el que guarda en la BD
+            
+            return render(request, 'AppCoder/inicio.html')
+    
+    
+    else:
+        
+        miFormulario = EstadioFormulario()
+    
+    #return HttpResponse("Esto es una prueba del inicio")
+    return render(request, 'AppCoder/estadioFormulario.html',{"miFormulario":miFormulario})
+
+
 
 #Primer vista
 def inicio(request):
