@@ -29,3 +29,16 @@ class Estadio(models.Model):
     
     direccion = models.CharField(max_length=40)
     anioFund = models.IntegerField()
+    
+    
+
+class Empleado(models.Model):
+    
+    nombre = models.CharField(max_length=40)
+    apellido = models.CharField(max_length=40)
+    dni = models.IntegerField()
+    profesional = models.BooleanField()
+    fechaDeNacimiento = models.DateField()
+    
+    def __str__(self):
+        return f"NOMBRE y APELLIDO: {self.nombre} {self.apellido}  ---- DNI: {self.dni}"

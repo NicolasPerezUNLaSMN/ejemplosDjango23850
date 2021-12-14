@@ -11,6 +11,9 @@ urlpatterns = [
     path('estadioFormulario', views.estadioFormulario),
     path('busquedaEquipo', views.busquedaEquipo),
     path('buscar/', views.buscar),
+    path('empleadoFormulario', views.empleadoFormulario),
+    
+   
     
     
 ]

@@ -2,10 +2,10 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 
-from AppCoder.models import Estadio, Equipo
+from AppCoder.models import Estadio, Equipo, Empleado
 
 
-from AppCoder.forms import EstadioFormulario
+from AppCoder.forms import EstadioFormulario, EmpleadoFormulario
 
 
 
@@ -66,6 +66,50 @@ def estadioFormulario(request):
     
     #return HttpResponse("Esto es una prueba del inicio")
     return render(request, 'AppCoder/estadioFormulario.html',{"miFormulario":miFormulario})
+
+
+
+
+def empleadoFormulario(request):
+    
+    #obtiene la direccion y el anioFund
+    
+    if request.method == "POST":
+        
+        miFormulario = EmpleadoFormulario(request.POST)
+        
+        if miFormulario.is_valid():  #va con ()
+            
+            informacion = miFormulario.cleaned_data
+        
+            emple = Empleado(
+                
+                nombre = informacion["nombre"],
+                apellido = informacion["apellido"],
+                dni = informacion["dni"],
+                profesional = informacion["profesional"],
+                fechaDeNacimiento = informacion["fechaDeNacimiento"]
+                
+                
+                
+            )
+            
+            emple.save() #Es el que guarda en la BD
+            
+            return render(request, 'AppCoder/inicio.html')
+    
+    
+    else:
+        
+        miFormulario = EmpleadoFormulario()
+    
+    #return HttpResponse("Esto es una prueba del inicio")
+    return render(request, 'AppCoder/empleadoFormulario.html',{"miFormulario":miFormulario})
+
+
+
+
+
 
 
 
