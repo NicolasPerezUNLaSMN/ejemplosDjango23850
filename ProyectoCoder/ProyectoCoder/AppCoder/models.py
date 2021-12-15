@@ -18,6 +18,10 @@ class Jugador(models.Model):
     numero = models.IntegerField()
     esBueno = models.BooleanField()
     
+    def __str__(self):
+        
+        return f"{self.apellido}, {self.numero} , {self.esBueno}"
+    
     
 class Equipo(models.Model):
     

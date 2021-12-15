@@ -1,0 +1,37 @@
+{% extends "AppCoder/padre.html" %}
+
+
+{% load static %}
+
+        {% block contenido2 %}
+            <h1 class="mb-1">JUGADORES de la BD</h1>
+        {% endblock %}
+
+
+        {% block contenido %}
+
+
+            
+            {% for j in jugadores %}
+
+
+                <li>JUGADOR:   {{ j }}  </li>
+                <button>
+
+                    <a href="{% url 'EliminarJugador' j.numero %}">Eliminar</a>
+                    <a href="{% url 'EditarJugador' j.numero %}">Editar</a>
+
+                </button>
+                <br>
+
+
+            {% endfor %}
+
+            <!-- href : jugadorFormulario -->
+            <a href="{% url 'JugadorFormulario'%}"> AGREGAR OTRO JUGADOR </a>
+
+
+
+         
+
+        {% endblock %}

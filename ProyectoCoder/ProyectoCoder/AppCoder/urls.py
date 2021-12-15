@@ -13,6 +13,12 @@ urlpatterns = [
     path('buscar/', views.buscar),
     path('empleadoFormulario', views.empleadoFormulario),
     
+    
+    path('jugadorFormulario', views.jugadorFormulario, name="JugadorFormulario"),
+    path('leerJugadores', views.leerJugadores, name="LeerJugadores"),
+    path('eliminarJugador/<numero_para_borrar>/', views.eliminarJugador, name="EliminarJugador"),
+    path('editarJugador/<numero_para_editar>/', views.editarJugador, name="EditarJugador"),
+    
    
     
     
