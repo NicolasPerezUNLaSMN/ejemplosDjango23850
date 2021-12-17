@@ -1,17 +1,30 @@
+from django.contrib.auth.password_validation import password_changed
 from django.shortcuts import render
 
 from django.http import HttpResponse
+from django.views.generic.edit import CreateView
 
-from AppCoder.models import Estadio, Equipo, Empleado, Jugador
+from AppCoder.models import Estadio, Equipo, Empleado, Jugador, Curso
 
 
-from AppCoder.forms import EstadioFormulario, EmpleadoFormulario, JugadorFormulario
+from AppCoder.forms import EstadioFormulario, EmpleadoFormulario, JugadorFormulario,UserRegisterForm
+
+
+#Para el login 
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout, authenticate
+
+
+#CBV ---> CRUD ---> Curso
+
+
 
 def editarJugador(request, numero_para_editar): 
     
    
     
     jugador = Jugador.objects.get(numero=numero_para_editar)
+    #id, numero, nombre, esBueno
     
    
     
@@ -25,7 +38,7 @@ def editarJugador(request, numero_para_editar):
         
           
                 
-               
+            #id
             jugador.apellido = informacion["apellido"]
             jugador.numero = informacion["numero"]
             jugador.esBueno = informacion["esBueno"]
@@ -117,7 +130,7 @@ def estadioFormulario(request):
             
             informacion = miFormulario.cleaned_data
         
-            estadioInsta = Estadio(direccion=informacion["direccion"] ,anioFund= informacion["anioFund"])
+            estadioInsta = Estadio( direccion=informacion["direccion"] , anioFund=informacion["anioFund"])
             
             estadioInsta.save() #Es el que guarda en la BD
             
@@ -231,3 +244,110 @@ def equipos(request):
     
     
     return render(request, 'AppCoder/equipos.html')
+
+
+
+from django.views.generic import ListView
+
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import  CreateView, UpdateView, DeleteView
+
+#from django.urls import reverse_lazy
+
+#Leer --- nos da todos los cursos
+class CursoList(ListView):
+    
+    model = Curso
+    template_name = "AppCoder/cursos_list.html"
+    
+#Detalle - SUPER Leer - Buscar!!!!!
+class CursoDetalle(DetailView):
+    
+    model = Curso
+    template_name = "AppCoder/curso_detalle.html"
+    
+#Crear elementos
+class CursoCreacion(CreateView):
+    
+    model = Curso
+    success_url = "../curso/list"
+    fields = ["nombre", "camada", "esNoche"]
+    
+#modificar!!!!!!!!!!!  
+class CursoUpdate(UpdateView):
+    
+    model = Curso
+    success_url = "../curso/list"
+    fields = ["nombre", "camada", "esNoche"]
+  
+#Borrar   
+class CursoDelete(DeleteView):
+    
+    model = Curso
+    success_url = "../curso/list"
+    
+    
+
+
+def login_request(request):
+    
+    if request.method =="POST":
+        
+        form = AuthenticationForm(request, data = request.POST)
+        
+        if form.is_valid():
+            
+            usuario = form.cleaned_data.get("username")
+            contra = form.cleaned_data.get("password")
+            
+            user = authenticate(username=usuario, password = contra)
+            
+            if user is not None:
+                
+                login(request, user)
+                
+                return render(request, "AppCoder/inicio.html", {"mensaje":f"BIENVENIDO, {usuario}!!!!"})
+                
+            else:
+                
+                return render(request, "AppCoder/inicio.html", {"mensaje":f"DATOS MALOS :(!!!!"})
+                
+            
+        else:
+            
+            return render(request, "AppCoder/inicio.html", {"mensaje":f"FORMULARIO erroneo"})
+            
+            
+    
+    
+    form = AuthenticationForm()  #Formulario sin nada para hacer el login
+    
+    return render(request, "AppCoder/login.html", {"form":form} )
+
+
+
+def register(request):
+
+      if request.method == 'POST':
+
+            #form = UserCreationForm(request.POST)
+            
+            form = UserRegisterForm(request.POST)
+            
+            if form.is_valid():
+
+                  username = form.cleaned_data['username']
+                  
+                  
+                  form.save()
+                  
+                  return render(request,"AppCoder/inicio.html" ,  {"mensaje":f"{username} Creado :)"})
+
+
+      else:
+            #form = UserCreationForm()     
+            
+              
+            form = UserRegisterForm()     
+
+      return render(request,"AppCoder/register.html" ,  {"form":form})
