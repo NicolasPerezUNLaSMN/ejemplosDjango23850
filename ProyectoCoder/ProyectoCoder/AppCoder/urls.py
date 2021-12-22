@@ -2,6 +2,10 @@ from django.urls import path
 from AppCoder import views
 
 
+#para el logout
+from django.contrib.auth.views import LogoutView
+
+
 urlpatterns = [
    
     
@@ -32,10 +36,14 @@ urlpatterns = [
     
     
     
+    
     #Clase 23 LOGIN
     path('login', views.login_request, name="Login"),
     path('register', views.register, name="Register"),
-   
     
+    path('logout', LogoutView.as_view(template_name='AppCoder/logout.html'), name="Logout"),
+    
+    path('editarPerfil', views.editarPerfil, name="EditarPerfil"),
+   
     
 ]

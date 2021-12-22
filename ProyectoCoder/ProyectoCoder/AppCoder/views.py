@@ -7,12 +7,18 @@ from django.views.generic.edit import CreateView
 from AppCoder.models import Estadio, Equipo, Empleado, Jugador, Curso
 
 
-from AppCoder.forms import EstadioFormulario, EmpleadoFormulario, JugadorFormulario,UserRegisterForm
+from AppCoder.forms import EstadioFormulario, EmpleadoFormulario, JugadorFormulario,UserRegisterForm, UserEditForm
+
+
 
 
 #Para el login 
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
+
+
+
+from django.contrib.auth.decorators import login_required
 
 
 #CBV ---> CRUD ---> Curso
@@ -73,7 +79,7 @@ def eliminarJugador(request, numero_para_borrar):
     
     
 
-
+@login_required
 def leerJugadores(request):
     
     jugadores = Jugador.objects.all()
@@ -270,7 +276,7 @@ class CursoDetalle(DetailView):
 class CursoCreacion(CreateView):
     
     model = Curso
-    success_url = "../curso/list"
+    success_url = "../curso/list"  #AppCoder/template/AppCoder/editar
     fields = ["nombre", "camada", "esNoche"]
     
 #modificar!!!!!!!!!!!  
@@ -351,3 +357,35 @@ def register(request):
             form = UserRegisterForm()     
 
       return render(request,"AppCoder/register.html" ,  {"form":form})
+  
+  
+  
+  
+@login_required
+def editarPerfil(request):
+    
+    
+    usuario = request.user
+    
+    if request.method == 'POST':
+        
+        miFormulario = UserEditForm(request.POST)
+        
+        if miFormulario.is_valid():
+            
+            informacion = miFormulario.cleaned_data
+            
+            usuario.email = informacion['email']
+            usuario.password1 = informacion['password1']
+            usuario.password2 = informacion['password2']
+            
+            usuario.save()
+            
+            return render(request, "AppCoder/inicio.html")
+        
+    else:
+        
+        miFormulario = UserEditForm(initial={'email':usuario.email})
+        
+        
+    return render(request, "AppCoder/editarPerfil.html", {"miFormulario":miFormulario, "usuario":usuario})

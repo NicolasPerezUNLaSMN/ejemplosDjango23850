@@ -7,6 +7,33 @@ from django.contrib.auth.models import User
 
 
 
+class UserEditForm(UserCreationForm):
+
+    #Obligatorios
+    email = forms.EmailField(label="Ingrese su email:")
+    password1 = forms.CharField(label='Contraseña')
+    password2 = forms.CharField(label='Repetir la contraseña', widget=forms.PasswordInput) 
+   
+  
+ 
+    class Meta:
+        model = User
+        fields = [ 'email', 'password1', 'password2'] 
+        
+     
+    
+    #class Meta:
+     #   model = User
+     #   fields = ['username', 'email', 'password1', 'password2', 'last_name', 'first_name'] 
+        
+        #Saca los mensajes de ayuda
+      #  help_texts = {k:"" for k in fields}
+
+
+
+
+
+
 class UserRegisterForm(UserCreationForm):
 
     #Obligatorios
@@ -15,19 +42,26 @@ class UserRegisterForm(UserCreationForm):
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repetir la contraseña', widget=forms.PasswordInput) 
    
-   #Extra
+    #Extra
     last_name = forms.CharField()
     first_name = forms.CharField()
-    imagen_avatar = forms.ImageField(required=False)
+   
+    #imagen_avatar = forms.ImageField(required=False)
 
    
-
+    
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2', 'last_name', 'first_name'] 
         
+     
+    
+    #class Meta:
+     #   model = User
+     #   fields = ['username', 'email', 'password1', 'password2', 'last_name', 'first_name'] 
+        
         #Saca los mensajes de ayuda
-        help_texts = {k:"" for k in fields}
+      #  help_texts = {k:"" for k in fields}
 
 
 

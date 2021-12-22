@@ -12,6 +12,8 @@ class Curso(models.Model):
         
         return f"CURSO: {self.nombre} CAMADA: {self.camada} NOCHE: {self.esNoche}"
     
+   
+    
 class Jugador(models.Model):
     
     apellido = models.CharField(max_length=40)
