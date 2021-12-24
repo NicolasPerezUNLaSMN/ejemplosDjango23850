@@ -1,5 +1,8 @@
 from django.db import models
 
+from django.contrib.auth.models import User
+from django.db.models.fields.files import ImageField
+
 # Create your models here.
 
 class Curso(models.Model):
@@ -19,6 +22,8 @@ class Jugador(models.Model):
     apellido = models.CharField(max_length=40)
     numero = models.IntegerField()
     esBueno = models.BooleanField()
+    
+   
     
     def __str__(self):
         
@@ -48,3 +53,12 @@ class Empleado(models.Model):
     
     def __str__(self):
         return f"NOMBRE y APELLIDO: {self.nombre} {self.apellido}  ---- DNI: {self.dni}"
+
+
+
+class Avatar(models.Model):
+    
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    imagen = models.ImageField(upload_to='avatares', null=True, blank = True)

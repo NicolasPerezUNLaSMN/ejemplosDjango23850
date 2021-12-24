@@ -95,3 +95,8 @@ class EstadioFormulario(forms.Form):
     anioFund  = forms.IntegerField()
     
     
+class AvatarFormulario(forms.Form):
+
+    #Especificar los campos
+    
+    imagen = forms.ImageField(required=True)

@@ -35,6 +35,20 @@
                 <li class="sidebar-nav-item"><a href="">Profesores</a></li>
                 <li class="sidebar-nav-item"><a href="">Estudiantes</a></li>
                 <li class="sidebar-nav-item"><a href="">Entregables</a></li>
+
+                {% if not request.user.is_authenticated %}
+                <li class="sidebar-nav-item"><a href="{% url 'Login' %}">HACER LOGIN</a></li>
+                {% endif %}
+
+
+                {% if  request.user.is_authenticated %}
+                <li class="sidebar-nav-item"><a href="">Hola, {{user.username}}</a></li>
+                {% endif %}
+
+               
+
+
+
             </ul>
         </nav>
         <!-- Header-->

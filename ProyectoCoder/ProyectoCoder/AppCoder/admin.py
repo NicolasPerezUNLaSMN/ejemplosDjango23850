@@ -15,4 +15,9 @@ admin.site.register(Estadio)
 
 admin.site.register(Empleado)
 
+admin.site.register(Avatar)
+
+
+
+
 
